@@ -15,16 +15,8 @@
         getEchoCall
       </ion-button>
 
-      <ion-button @click="getConnectionManager">
-        Get Connection Manager
-      </ion-button>
-
-      <ion-button @click="getConnectionViewWillDisappear">
-        Get Connection View Will Disappear
-      </ion-button>
-
-      <ion-button @click="getScanDevices">
-        Get Scan Devices
+      <ion-button @click="scanDevice">
+        scanDevice
       </ion-button>
 
       <ion-header collapse="condense">
@@ -55,7 +47,8 @@ import {
 import MessageListItem from '@/components/MessageListItem.vue';
 import {defineComponent} from 'vue';
 import {getMessages} from '@/data/messages';
-import {XSense} from '@capacitor/xsense';
+// import {XSense} from '@capacitor/xsense';
+import {IonicNativePluginExample} from '../plugins/IonicNativePluginExample'
 
 export default defineComponent({
   name: 'HomePage',
@@ -68,27 +61,32 @@ export default defineComponent({
     }
   },
   methods: {
+    async getEchoCall() {
+      // add a listener to native events which invokes some callback
+      IonicNativePluginExample.addListener("EVENT_LISTENER_NAME", ({message}) => {
+        console.log(message);
+      });
+      console.log("Listeneer added")
+
+      try {
+        const {message} = await IonicNativePluginExample.NativeMethod();
+
+        console.log("response form NativeMethod", message)
+
+        await IonicNativePluginExample.NotifyListeners();
+      } catch (e: any) {
+        console.log("An error", e)
+      }
+    },
+    async scanDevice() {
+      console.log("calling scanDevice function from js")
+      await IonicNativePluginExample.scanDevices()
+    },
     refresh: (ev: CustomEvent) => {
       setTimeout(() => {
         ev.detail.complete();
       }, 3000);
     },
-    async getEchoCall() {
-      let res = await XSense.echo({value: 'Hello from demo'});
-      console.log('got response from XSense.echo', JSON.stringify(res));
-    },
-    async getConnectionManager() {
-      let res = await XSense.connectionManager();
-      console.log('got response from XSense.connectionManager', JSON.stringify(res));
-    },
-    async getConnectionViewWillDisappear() {
-      let res = await XSense.CoonectionviewWillDisappear();
-      console.log('got response from XSense.CoonectionviewWillDisappear', JSON.stringify(res));
-    },
-    async getScanDevices() {
-      let res = await XSense.scanDevices();
-      console.log('got response from XSense.scanDevices', JSON.stringify(res));
-    }
   },
   components: {
     IonContent,
