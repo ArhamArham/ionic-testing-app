@@ -63,25 +63,37 @@ export default defineComponent({
   methods: {
     async getEchoCall() {
       // add a listener to native events which invokes some callback
-      IonicNativePluginExample.addListener("EVENT_LISTENER_NAME", ({message}) => {
-        console.log(message);
+      IonicNativePluginExample.addListener("EVENT_LISTENER_NAMEQ", (message) => {
+        console.log("Notifying->",message);
       });
       console.log("Listeneer added")
 
-      try {
-        const {message} = await IonicNativePluginExample.NativeMethod();
-
-        console.log("response form NativeMethod", message)
-
-        await IonicNativePluginExample.NotifyListeners();
-      } catch (e: any) {
-        console.log("An error", e)
-      }
+     
     },
     async scanDevice() {
       console.log("calling scanDevice function from js")
       await IonicNativePluginExample.scanDevices()
     },
+
+    async connectionManager() {
+      console.log("calling connectionManager function from js")
+      await IonicNativePluginExample.connectionManager()
+    },
+    async CoonectionScanStopWhenViewWillDisappear() {
+      console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
+      await IonicNativePluginExample.CoonectionviewWillDisappear()
+    },
+
+    async CoonectionScanStopWhenViewWillDisappear() {
+      console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
+      await IonicNativePluginExample.CoonectionviewWillDisappear()
+    },
+    
+    async connectSpecifiDevice(udid) {
+      console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
+      await IonicNativePluginExample.connectSpecifiDevice(udid)
+    },
+
     refresh: (ev: CustomEvent) => {
       setTimeout(() => {
         ev.detail.complete();

@@ -8,10 +8,9 @@
 
 
 CAP_PLUGIN(IonicNativePluginExample, "IonicNativePluginExample",
-           CAP_PLUGIN_METHOD(NativeMethod, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(NotifyListeners, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(echo, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(connectionManager, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(CoonectionviewWillDisappear, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(scanDevices, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(connectSpecifiDevice, CAPPluginReturnPromise);
+           
 )

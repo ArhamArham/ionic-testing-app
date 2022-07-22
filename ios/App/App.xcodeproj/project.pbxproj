@@ -15,12 +15,29 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
+		E8874CE0288AAFA200CE716F /* XsensDotSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B452889B3CA00E483BB /* XsensDotSdk.framework */; };
+		E8874CE1288AAFA200CE716F /* XsensDotSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B452889B3CA00E483BB /* XsensDotSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E8874CE3288AAFA400CE716F /* XsensDotSdkMfm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B462889B3CA00E483BB /* XsensDotSdkMfm.framework */; };
+		E8874CE4288AAFA400CE716F /* XsensDotSdkMfm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B462889B3CA00E483BB /* XsensDotSdkMfm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FCA21B412889ADF900E483BB /* IonicNativePluginExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA21B402889ADF800E483BB /* IonicNativePluginExample.swift */; };
 		FCA21B442889AE3F00E483BB /* IonicNativePluginExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA21B432889AE3F00E483BB /* IonicNativePluginExample.m */; };
-		FCA21B472889B3CA00E483BB /* XsensDotSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B452889B3CA00E483BB /* XsensDotSdk.framework */; };
-		FCA21B482889B3CA00E483BB /* XsensDotSdkMfm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCA21B462889B3CA00E483BB /* XsensDotSdkMfm.framework */; };
 		FCA21B4A2889B42C00E483BB /* XSense.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA21B492889B42C00E483BB /* XSense.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E8874CE2288AAFA200CE716F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E8874CE4288AAFA400CE716F /* XsensDotSdkMfm.framework in Embed Frameworks */,
+				E8874CE1288AAFA200CE716F /* XsensDotSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
@@ -48,9 +65,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8874CE0288AAFA200CE716F /* XsensDotSdk.framework in Frameworks */,
+				E8874CE3288AAFA400CE716F /* XsensDotSdkMfm.framework in Frameworks */,
 				A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */,
-				FCA21B482889B3CA00E483BB /* XsensDotSdkMfm.framework in Frameworks */,
-				FCA21B472889B3CA00E483BB /* XsensDotSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +142,7 @@
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
 				9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */,
+				E8874CE2288AAFA200CE716F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -369,6 +387,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5KD9QF5S98;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/App",
@@ -394,6 +414,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5KD9QF5S98;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/App",

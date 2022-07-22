@@ -5,14 +5,13 @@ import XsensDotSdk
 @objc public class XSense: NSObject, XsensDotConnectionDelegate {
     
     
-    var deviceList: [XsensDotDevice]?
-    var connectList: [Any]?
+    var deviceList = [XsensDotDevice]()
+    var connectList = [XsensDotDevice]()
+    var newDeviceList = [[String]]()
+    let nc = NotificationCenter.default
     
     
-    @objc public func echo(_ value: String) -> String {
-        print(value)
-        return value
-    }
+  
     
     
     @objc func connectionManager(){
@@ -32,11 +31,78 @@ import XsensDotSdk
             print("Please enable bluetoooth first")
             return
         }
+        
+        deviceList.removeAll()
+        
+           if connectList.count != 0 {
+               
+               deviceList += connectList
+            }
+        
         XsensDotConnectionManager.scan()
+      
+        
+    }
+    
+    
+    public func connectSpecifiDevice(udid:String) {
+        
+        let _ = deviceList.first { device in
+            if device.macAddress == udid && !device.stateIsConnected(){
+                
+                
+                    print("conncted")
+                    connectList.append(device)
+                    /// connect a sensor
+                    XsensDotConnectionManager.connect(device)
+                    /// add to DevicePool.
+                    /// Reconnection has Two conditions,please also unbind it after disconnected .
+                    /// 1. [XsensDotReconnectManager setEnable:YES];
+                    /// 2. [XsensDotDevicePool bindDevice:device]
+                    XsensDotDevicePool.bindDevice(device)
+                    print("bind")
+            
+                
+            }
+            else {
+                connectList.removeAll()
+                /// Disconnect the sensor
+                XsensDotConnectionManager.disconnect(device)
+                /// Remove from the DevicePool
+                XsensDotDevicePool.unbindDevice(device)
+                print("unbind")
+            }
+            
+            return true;
+        }
+        
+
+        
     }
     
     public func onScanCompleted() {
-        print("Device ScanCompleted")
+        
+        
+        
+        print("Device ScanCompleted\(deviceList.first)")
+        
+        
+        
+        nc.post(name: Notification.Name("UserLoggedIn"), object: nil, userInfo: ["message":newDeviceList]);
+
+    }
+    
+    func disconnectAll(){
+        for item in connectList{
+            print("item.displayName()-><-\(item.displayName())")
+            XsensDotConnectionManager.disconnect(item)
+            /// Remove from the DevicePool
+            XsensDotDevicePool.unbindDevice(item)
+        }
+    }
+    func DeviceStopScan(){
+        print("Device Stop Scan ")
+        XsensDotConnectionManager.stopScan()
     }
     
     public func onDeviceConnectFailed(_ device: XsensDotDevice) {
@@ -54,6 +120,12 @@ import XsensDotSdk
     
     public func onDiscover(_ device: XsensDotDevice) {
         print("Device Discover:\n Device macAddress:\(device.macAddress) -|- Device Name:\(device.displayName())")
+            if !deviceList.contains(device) {
+                deviceList.append(device)
+                newDeviceList.append([device.displayName(),device.macAddress,"\(device.stateIsConnected())"])
+            }
+            
+        
     }
     
     
