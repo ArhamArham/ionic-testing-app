@@ -111,11 +111,31 @@ import XsensDotSdk
     
     public func onDeviceDisconnected(_ device: XsensDotDevice) {
         print("Device Disconnected:\n Device macAddress:\(device.macAddress) -|- Device Name:\(device.displayName())")
+        
+        for (index,element) in newDeviceList.enumerated(){
+            if let _ =  element.firstIndex(of: device.macAddress){
+                newDeviceList[index] = [device.displayName(),device.macAddress,"\(device.stateIsConnected())"]
+                break
+            }
+            
+        }
+        nc.post(name: Notification.Name("UserLoggedIn"), object: nil, userInfo: ["message":newDeviceList]);
+        
     }
     
     
     public func onDeviceConnectSucceeded(_ device: XsensDotDevice) {
         print("Device Connect Succeeded:\n Device macAddress:\(device.macAddress) -|- Device Name:\(device.displayName())")
+       
+        for (index,element) in newDeviceList.enumerated(){
+            if let _ =  element.firstIndex(of: device.macAddress){
+                newDeviceList[index] = [device.displayName(),device.macAddress,"\(device.stateIsConnected())"]
+                break
+            }
+            
+        }
+        nc.post(name: Notification.Name("UserLoggedIn"), object: nil, userInfo: ["message":newDeviceList]);
+        
     }
     
     public func onDiscover(_ device: XsensDotDevice) {
