@@ -11,12 +11,8 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <ion-button @click="getEchoCall">
-        getEchoCall
-      </ion-button>
-
       <ion-button @click="scanDevice">
-        scanDevice
+        Scan Devices
       </ion-button>
 
       <ion-header collapse="condense">
@@ -26,7 +22,11 @@
       </ion-header>
 
       <ion-list>
-        <MessageListItem v-for="message in messages" :key="message.id" :message="message"/>
+        <MessageListItem
+          v-for="(device,index) in devices"
+          :key="index"
+          :message="device"
+        />
       </ion-list>
     </ion-content>
   </ion-page>
@@ -55,21 +55,24 @@ export default defineComponent({
   data() {
     return {
       messages: getMessages(),
+      devices: [],
       int1: 0,
       int2: 0,
       answer: ""
     }
   },
+  async mounted() {
+    await this.connectionManager();
+    this.addListeners()
+  },
   methods: {
-    async getEchoCall() {
-      // add a listener to native events which invokes some callback
-      IonicNativePluginExample.addListener("EVENT_LISTENER_NAMEQ", (message) => {
-        console.log("Notifying->",message);
+    addListeners() {
+      IonicNativePluginExample.addListener("EVENT_LISTENER_NAMEQ", ({message}) => {
+        console.log("Notifying->", message);
+        this.devices = message
       });
-      console.log("Listeneer added")
-
-     
     },
+
     async scanDevice() {
       console.log("calling scanDevice function from js")
       await IonicNativePluginExample.scanDevices()
@@ -83,15 +86,9 @@ export default defineComponent({
       console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
       await IonicNativePluginExample.CoonectionviewWillDisappear()
     },
-
-    async CoonectionScanStopWhenViewWillDisappear() {
+    async connectSpecifiDevice(udid: string) {
       console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
-      await IonicNativePluginExample.CoonectionviewWillDisappear()
-    },
-    
-    async connectSpecifiDevice(udid) {
-      console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
-      await IonicNativePluginExample.connectSpecifiDevice(udid)
+      await IonicNativePluginExample.connectSpecifiDevice({udid})
     },
 
     refresh: (ev: CustomEvent) => {
