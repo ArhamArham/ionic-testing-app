@@ -22,12 +22,32 @@
       </ion-header>
 
       <ion-list>
-        <MessageListItem
-          v-for="(device,index) in devices"
-          :key="index"
-          :message="device"
-          @connect="connectToDevice"
-        />
+        <template v-if="!scanning">
+          <template v-if="devices.length">
+            <MessageListItem
+              v-for="(device,index) in devices"
+              :key="index"
+              :message="device"
+              @connect="connectToDevice"
+            />
+          </template>
+          <ion-item v-else>
+            <ion-label class="ion-text-wrap ion-align-items-center">
+              <p>
+                No device found
+              </p>
+            </ion-label>
+          </ion-item>
+        </template>
+        <template v-else>
+          <ion-item>
+            <ion-label class="ion-text-wrap ion-align-items-center">
+              <p>
+                Scanning...
+              </p>
+            </ion-label>
+          </ion-item>
+        </template>
       </ion-list>
     </ion-content>
   </ion-page>
@@ -43,7 +63,7 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-  IonButton
+  IonButton, IonItem, IonLabel
 } from '@ionic/vue';
 import MessageListItem from '@/components/MessageListItem.vue';
 import {defineComponent} from 'vue';
@@ -59,7 +79,8 @@ export default defineComponent({
       devices: [],
       int1: 0,
       int2: 0,
-      answer: ""
+      answer: "",
+      scanning: false
     }
   },
   async mounted() {
@@ -71,10 +92,12 @@ export default defineComponent({
       IonicNativePluginExample.addListener("EVENT_LISTENER_NAMEQ", ({message}) => {
         console.log("Notifying->", message);
         this.devices = message
+        this.scanning = false
       });
     },
 
     async scanDevice() {
+      this.scanning = true;
       console.log("calling scanDevice function from js")
       await IonicNativePluginExample.scanDevices()
     },
@@ -110,7 +133,9 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     MessageListItem,
-    IonButton
+    IonButton,
+    IonItem,
+    IonLabel,
   },
 });
 </script>
