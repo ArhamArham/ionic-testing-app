@@ -1,12 +1,12 @@
 <template>
-  <ion-item :detail="false" class="list-item">
-    <ion-label class="ion-text-wrap">
+  <ion-item :detail="false" class="list-item" @click="onConnect">
+    <ion-label class="ion-text-wrap ion-align-items-center">
       <h2>
-        {{ message[0] }}
+        Device Name: {{ message[0] }}
       </h2>
-      <h3>{{ message[1] }}</h3>
+      <h3>UUID: {{ message[1] }}</h3>
       <p>
-        {{ message[2] }}
+        Status: {{ message[2] === "true" ? "Connected" : "Not connected" }}
       </p>
     </ion-label>
   </ion-item>
@@ -23,13 +23,14 @@ export default defineComponent({
     IonItem,
     IonLabel,
   },
-  props: {
-    message: Object,
-  },
+  props: ['message'],
   methods: {
     isIos: () => {
       const win = window as any;
       return win && win.Ionic && win.Ionic.mode === 'ios';
+    },
+    onConnect() {
+      this.$emit('connect', this.message[1])
     }
   },
   data() {

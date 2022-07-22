@@ -26,6 +26,7 @@
           v-for="(device,index) in devices"
           :key="index"
           :message="device"
+          @connect="connectToDevice"
         />
       </ion-list>
     </ion-content>
@@ -90,7 +91,9 @@ export default defineComponent({
       console.log("calling CoonectionScanStopWhenViewWillDisappear function from js")
       await IonicNativePluginExample.connectSpecifiDevice({udid})
     },
-
+    async connectToDevice(uuid: string) {
+      await this.connectSpecifiDevice(uuid)
+    },
     refresh: (ev: CustomEvent) => {
       setTimeout(() => {
         ev.detail.complete();
