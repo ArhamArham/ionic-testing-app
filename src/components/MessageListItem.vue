@@ -5,6 +5,7 @@
         Device Name: {{ message[0] }}
       </h2>
       <h3>UUID: {{ message[1] }}</h3>
+      <h3>Battery: {{ message[3] }}</h3>
       <p>
         Status: {{ message[2] === "true" ? "Connected" : "Not connected" }}
       </p>

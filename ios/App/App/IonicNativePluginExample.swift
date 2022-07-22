@@ -29,6 +29,7 @@ public class IonicNativePluginExample: CAPPlugin {
     
     @objc func scanDevices(_ call: CAPPluginCall){
         
+//        implementation.disconnectAll()
         implementation.scanDevices();
         call.resolve()
     }

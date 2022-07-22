@@ -33,6 +33,7 @@ import XsensDotSdk
         }
         
         deviceList.removeAll()
+        newDeviceList.removeAll()
         
            if connectList.count != 0 {
                
